@@ -1,1 +1,5 @@
 <p>This is the main page.</p>
+{% if userinfo %}
+    <p>Welcome, {{ userinfo.username }}</p>
+    <p>Your email: {{ userinfo.email }}</p>
+{% endif %}

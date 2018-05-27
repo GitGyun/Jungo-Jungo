@@ -34,7 +34,8 @@ def login(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 django_login(request, user)
-                return redirect('mainpage')
+                userinfo = User.objects.get(username=username)
+                return mainpage(request, userinfo)
             else:
                 return HttpResponse('로그인 실패, 다시 시도 해보세요.')
     
@@ -45,5 +46,8 @@ def login(request):
         }
         return render(request, 'jungo/login.html', context)
 
-def mainpage(request):
-    return render(request, 'jungo/mainpage.html')
+def mainpage(request, userinfo):
+    context = {
+        'userinfo': userinfo
+    }
+    return render(request, 'jungo/mainpage.html', context)
