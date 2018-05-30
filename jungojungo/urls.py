@@ -18,5 +18,5 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('jungo.urls')),    # jungo 앱에서 사용하는 url 패턴.
+    path('', include('jungo.urls')),    # url patterns used in jungo app.
 ]

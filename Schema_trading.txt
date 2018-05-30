@@ -1,0 +1,76 @@
+CREATE SCHEMA TRADING;
+
+CREATE TABLE TRADING.user
+( userid NUMERIC(8,0) NOT NULL,
+username VARCHAR(16),
+pNo NUMERIC(10,0),
+email VARCHAR(32),
+balance NUMERIC(10,0) NOT NULL DEFAULT 0,
+PRIMARY KEY (userid) 
+);
+
+CREATE TABLE TRADING.product
+( pid NUMERIC(7,0) NOT NULL,
+pname VARCHAR(16) NOT NULL,
+ptype NUMERIC(1,0) NOT NULL,
+price NUMERIC(7,0) NOT NULL DEFAULT 0,
+pdesc VARCHAR(5000)
+);
+
+CREATE TABLE TRADING.wishlist
+(bid NUMERIC(8,0) NOT NULL,
+pid NUMERIC(7,0) NOT NULL,
+PRIMARY KEY (bid,ppid),
+FOREIGN KEY (bid) REFERENCES TRADING.user(userid),
+FOREIGN KEY (ppid) REFERENCES TRADING.product(pid)
+);
+
+CREATE TABLE TRADING.selllist
+(sid NUMERIC(8,0) NOT NULL,
+pid NUMERIC(7,0) NOT NULL,
+PRIMARY KEY (bid,pid),
+FOREIGN KEY (sid) REFERENCES TRADING.user(userid),
+FOREIGN KEY (pid) REFERENCES TRADING.product(pid)
+);
+
+CREATE TABLE TRADING.matchlist
+(bid NUMERIC(8,0) NOT NULL,
+sid NUMERIC(8,0) NOT NULL,
+pid NUMERIC(7,0) NOT NULL,
+PRIMARY KEY (bid,pid),
+FOREIGN KEY (bid) REFERENCES TRADING.user(userid),
+FOREIGN KEY (sid) REFERENCES TRADING.user(userid),
+FOREIGN KEY (pid) REFERENCES TRADING.product(pid)
+);
+
+
+
+Q0 :  // selllist 등록
+INSERT INTO TRADING.product (pid,pname,ptype,price,pdesc) VALUES ( (length of table<product>), pname,ptype,price,pdesc );
+INSERT INTO TRADING.selllist (sid,pid) VALUES ( userid, (length of table<product>) );
+Q1 :  // wishlist 등록
+INSERT INTO TRADING.product (pid,pname,ptype,price,pdesc) VALUES ( (length of table<product>), pname,ptype,price,pdesc );
+INSERT INTO TRADING.wishlist (sid,pid) VALUES ( userid, (length of table<product>) );
+Q2 :  // matchlist 등록 - 등록된 물품에 구매신청 시
+INSERT INTO TRADING.matchlist (bid,sid,pid) VALUES ( <신청자 id>, <판매자 id>, <product id> );
+Q3 : // matchlist 삭제 - 거래성공 시 transaction
+DELETE FROM TRADING.matchlist where bid = <구매자 id> and sid = <판매자 id> and pid = <제품 id> ;
+
+
+/* 마이페이지 */
+Q4 : // 마이페이지 정보 - 자신의 wishlist 출력
+SELECT * from TRADING.wishlist where bid = <자신의 id>;
+Q5 : // 자신의 selllist 출력
+SELECT * from TRADING.selllist where sid = <자신의 id>;
+Q6 : // 자신의 거래중 품목 출력
+SELECT * from TRADING.matchlist where bid = <자신의 id> or sid = <자신의 id>;
+UPDATE TRADING.user set balance = <price> + balance where userid = <bid>;
+UPDATE TRADING.user set balance = <price> - balance where userid = <sid>;
+
+
+// example database
+INSERT INTO TRADING.product (pid,pname,ptype,price,pdesc) VALUES ('0000001','ALICE','1','20000','test string');
+INSERT INTO TRADING.product (pid,pname,ptype,price,pdesc) VALUES ('0000002','BOB','2','40000','NULL');
+
+INSERT INTO TRADING.user (userid,username,pNo,email) VALUES ('00000001','AA','01012344567','email@gmail.com');
+INSERT INTO TRADING.user (userid,username,pNo,email) VALUES ('00000002','BB','01012344568','email2@gmail.com');
