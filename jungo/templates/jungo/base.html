@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://bootswatch.com/4/sandstone/bootstrap.min.css">
+    <title>{% block title %}KAIST Jungo Product Trade Site{% endblock %}</title>
+    <meta http-equiv="Content-Type"
+          name="Jungo-Jungo - KAIST Jungo Product Trade Site"
+          content="This is a site for servicing trade of Jungo Product between KAIST students.; charset=UTF-8"/>
+</head>
+
+<body>
+    <div id="sidebar">
+        {% block sidebar %}
+        <ul>
+            <li><a href="/">Home</a></li>
+        </ul>
+        <ul>
+            <li><a href="/mainpage">Main</a></li>
+        </ul>
+        {% endblock %}
+    </div>
+    
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+
+</html>

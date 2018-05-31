@@ -3,8 +3,10 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),                # for index pages.
-    path('signup/', views.signup, name='signup'),       # for signup pages.
-    path('login/', views.login, name='login'),          # for login pages.
-    path('mainpage/', views.mainpage, name='mainpage'), # for main pages.
+    path('', views.index, name='index'),                # index page.
+    path('signup/', views.signup, name='signup'),       # signup page.
+    path('login/', views.login, name='login'),          # login page.
+    path('mainpage/', views.mainpage, name='mainpage'), # main page.
+    path('mainpage/wishlist', views.wishlist, name='wishlist'), # show wishlist.
+    path('sell/<int:pid>', views.sell, name='buy') # sell the product.
 ]

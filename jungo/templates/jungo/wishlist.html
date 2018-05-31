@@ -1,0 +1,16 @@
+{% extends "jungo/base.html" %}
+
+{% block title %}Jungo-Jungo Mainpage{% endblock %}
+
+{% block content %}
+
+<h1>Jungo-Jungo Wishlist</h1>
+{% for row in wishlist %}
+<div>
+    Product Name: {{ row.product.pname }}<br>
+    Price: {{ row.product.price }}<br>
+    <a href="/sell/">Sell this product</a>
+</div>
+{% endfor %}
+
+{% endblock %}

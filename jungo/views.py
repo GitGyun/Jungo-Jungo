@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import SignupForm, LoginForm
-from django.contrib.auth.models import User
+from .models import Student, Wishlist, Selllist, Matchlist
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
 from django.template import RequestContext
@@ -24,6 +24,7 @@ def signup(request):
             'signup_form': signup_form,
         }
         return render(request, 'jungo/signup.html', context)
+       
         
 def login(request):
     if request.method == "POST":
@@ -34,8 +35,7 @@ def login(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 django_login(request, user)
-                userinfo = User.objects.get(username=username)
-                return mainpage(request, userinfo)
+                return mainpage(request)
             else:
                 return HttpResponse('로그인 실패, 다시 시도 해보세요.')
     
@@ -46,8 +46,42 @@ def login(request):
         }
         return render(request, 'jungo/login.html', context)
 
-def mainpage(request, userinfo):
+
+def mainpage(request):
+    current_user = Student.objects.get(username=request.user.username)
+    if current_user.is_authenticated:
+        context = {
+            'userinfo': Student.objects.filter(username=request.user.username).values(
+                                'username', 'student_id', 'email', 'phone_no', 'balance')[0],
+            'wishinfo': current_user.wishlists.all(),
+            'sellinfo': current_user.selllists.all(),
+            'buyreq': current_user.matchlists_buyer.all(),
+            'sellreq': current_user.matchlists_seller.all(),
+        }
+        return render(request, 'jungo/mainpage.html', context)
+    
+    else:
+        return login(request)
+
+
+def wishlist(request):
     context = {
-        'userinfo': userinfo
+        'wishlist': Wishlist.objects.all()
     }
-    return render(request, 'jungo/mainpage.html', context)
+    return render(request, 'jungo/wishlist.html', context)
+    
+    
+def sell(request, pid):
+    current_user = Student.objects.get(username=request.user.username)
+    row = Wishlist.objects.get(product=pid)
+    
+    # Create a row in the Matchlist.
+    match = Matchlist(product=row.product)
+    match.save()
+    match.buyer.add(row.buyer.all()[0])
+    match.seller.add(current_user)
+    
+    # delete the product from the Wishlist.
+    row.delete()
+    
+    return mainpage(request)
