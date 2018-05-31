@@ -36,7 +36,8 @@
 <p>You haven't write a selllist.</p>
 {% endif %}
 
-<h3>Trade request on your wishlist</h3>
+<h2>Procedding Trade</h2>
+<h3>Sell</h3>
 {% if buyreq %}
     {% for buy in buyreq %}
         <p>
@@ -53,7 +54,7 @@
 <p>No requests.</p>
 {% endif %}
 
-<h3>Trade request on your selllist</h3>
+<h3>Buy</h3>
 {% if sellreq %}
     {% for sell in sellreq %}
         <p>
@@ -70,6 +71,7 @@
 <p>No requests.</p>
 {% endif %}
 
-<a href="/mainpage/wishlist">Go To Wishlist</a>
+<a href="/mainpage/wishlist">Go To Wishlist</a><br>
+<a href="/mainpage/selllist">Go To Selllist</a>
 
 {% endblock %}

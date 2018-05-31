@@ -48,8 +48,8 @@ def login(request):
 
 
 def mainpage(request):
-    current_user = Student.objects.get(username=request.user.username)
-    if current_user.is_authenticated:
+    if request.user.is_authenticated:
+        current_user = Student.objects.get(username=request.user.username)
         context = {
             'userinfo': Student.objects.filter(username=request.user.username).values(
                                 'username', 'student_id', 'email', 'phone_no', 'balance')[0],
@@ -71,15 +71,47 @@ def wishlist(request):
     return render(request, 'jungo/wishlist.html', context)
     
     
+def selllist(request):
+    context = {
+        'selllist': Selllist.objects.all()
+    }
+    return render(request, 'jungo/selllist.html', context)
+    
+    
 def sell(request, pid):
     current_user = Student.objects.get(username=request.user.username)
     row = Wishlist.objects.get(product=pid)
     
+    # User can't buy and sell himself/herself.
+    buyer = row.buyer.all()[0]
+    if buyer == current_user:
+        return HttpResponse("You can't sell your wishing product!")
+    
     # Create a row in the Matchlist.
     match = Matchlist(product=row.product)
     match.save()
-    match.buyer.add(row.buyer.all()[0])
+    match.buyer.add(buyer)
     match.seller.add(current_user)
+    
+    # delete the product from the Wishlist.
+    row.delete()
+    
+    return mainpage(request)
+
+def buy(request, pid):
+    current_user = Student.objects.get(username=request.user.username)
+    row = Selllist.objects.get(product=pid)
+    
+    # User can't buy and sell himself/herself.
+    seller = row.seller.all()[0]
+    if seller == current_user:
+        return HttpResponse("You can't buy your selling product!")
+    
+    # Create a row in the Matchlist.
+    match = Matchlist(product=row.product)
+    match.save()
+    match.seller.add(seller)
+    match.buyer.add(current_user)
     
     # delete the product from the Wishlist.
     row.delete()
