@@ -1,0 +1,66 @@
+{% block title %}
+<p><h1> search page </h1></p>
+<p><h3> Find products to buy </h3></p>
+{% endblock %}
+
+
+<button onClick="window.location.href='/mainpage'"> Back to Main Page </button>
+
+{% block content %}
+
+<div class="product">
+
+	<form action="" method="post">
+
+		{% csrf_token %}
+		{% for field in search_form %}
+			<div class="form-group
+{% if field.errors %}
+ has-error{% endif %}">
+
+				{{ field.label_tag }}
+				{{ field }}
+				{% if field.errors %}
+					{% for error in field.errors %}
+					<span class="help-block">
+{{ error }}
+</span>
+
+					{% endfor %}
+				{% endif %}
+
+			</div>
+		{% endfor %}
+
+		{% if signup_form.non_field_errors %}
+			{% for error in search_form.non_field_errors %}
+
+			<p class="text-danger"><b>{{ error }}</b></p>
+
+			{% endfor %}
+
+		{% endif %}
+
+		<button class="btn btn-primary btn-block">Search</button>
+
+	</form></div>{% endblock %}
+
+
+<table align=center cellpadding=1 border=1 bordercolor=222222>
+<tr>
+<td> PID </td>
+<td> Product Type </td>
+<td> Product Name </td>
+<td> Price </td>
+<td> Details ... </td>
+</tr>
+{% for post in posts %}
+<tr>
+<td> {{ post.pid }} </td>
+<td> {{ post.prodType }} </td>
+<td> {{ post.prodName }} </td>
+<td> {{ post.price }} </td>
+<td> <a href="javascript:alert('NotImplementedError');"> Details... </a> </td>
+</tr>
+{% endfor %}
+</table>
