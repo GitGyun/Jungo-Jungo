@@ -1,0 +1,45 @@
+{% block title %}
+<h1>[product]</h1>
+<h3> I want to sell a new product! </h3>
+<p> <button onClick='windows.location.href='/mainpage/'"> Back to main page </button> </p>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="product">
+
+	<form action="" method="post">
+
+		{% csrf_token %}
+		{% for field in prod_form %}
+			<div class="form-group
+{% if field.errors %}
+ has-error{% endif %}">
+
+				{{ field.label_tag }}
+				{{ field }}
+				{% if field.errors %}
+					{% for error in field.errors %}
+					<span class="help-block">
+{{ error }}
+</span>
+
+					{% endfor %}
+				{% endif %}
+
+			</div>
+		{% endfor %}
+
+		{% if signup_form.non_field_errors %}
+			{% for error in prod_form.non_field_errors %}
+
+			<p class="text-danger"><b>{{ error }}</b></p>
+
+			{% endfor %}
+
+		{% endif %}
+
+		<button class="btn btn-primary btn-block">Add Product</button>
+
+	</form></div>{% endblock %}

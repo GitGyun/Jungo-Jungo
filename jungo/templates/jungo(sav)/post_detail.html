@@ -1,0 +1,29 @@
+{% extends "jungo/base.html" %}
+
+{% block content %}
+    <div class="post">
+        <a href="/buypage/" title="buypage">Return</a>
+        <p></p>
+        {% if post.published_date %}
+            <div class="date">
+                {{ post.published_date }}
+            </div>
+        {% else %}
+            <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
+            <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+        {% endif %}
+        {% if user.is_authenticated and user == post.author %}
+            <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+            <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+         {% else %}
+            <p>게시자만 수정이 가능합니다.</p>
+        {% endif %}
+        <h1>{{ post.title }}</h1>
+        {% if post.file %}
+            <a id="id_uploaded_file" href="{{ post.file.url }}" download>{{ post.file.name }}</a>
+        {% endif %}
+        <p>{{ post.text|linebreaksbr }}</p>
+        
+        <a href="/sell/{{ post.pid }}">Sell this product</a>
+    </div>
+{% endblock %}

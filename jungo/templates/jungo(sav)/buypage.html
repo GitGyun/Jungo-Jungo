@@ -1,0 +1,34 @@
+{% extends "jungo/base.html" %}
+
+{% load staticfiles %}
+<p>This is the buy page.</p>
+
+{% block content %}
+<body>
+		<h1><a href="{% url 'post_new' %}" class="top-menu">PLUS</a></h1>        
+        <table style="border-collapse:collapse;">
+            <thead>
+                <tr style="border-bottom:1px solid black;">
+                    <th style="padding:5px;"><em>Num</em></th>
+                    <th style="padding:5px;border-left:1px solid black;"><em>P_type</em></th>
+                    <th style="padding:5px;border-left:1px solid black;"><em>Product</em></th>
+                    <th style="padding:5px;border-left:1px solid black;"><em>Title</em></th>
+                    <th style="padding:5px;border-left:1px solid black;"><em>Author</em></th>
+                    <th style="padding:5px;border-left:1px solid black;"><em>Date</em></th>
+                </tr>
+            </thead>
+            <tbody>
+            	{% for post in posts %}
+                <tr>
+                	<td style="padding:5px;">{{post.pk}}</td>
+                    <td style="padding:5px;border-left:1px solid black;">{{post.ptype}}</td>
+                    <td style="padding:5px;border-left:1px solid black;">{{post.pname}}</td>
+                	<td style="padding:5px;border-left:1px solid black;"><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></td>
+                    <td style="padding:5px;border-left:1px solid black;">{{post.author}}</td>
+                    <td style="padding:5px;border-left:1px solid black;">{{post.published_date}}</td>     
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</body>
+{% endblock %}

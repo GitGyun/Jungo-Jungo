@@ -1,0 +1,49 @@
+{% block content %}
+    <div class="post">
+        <button onClick="window.location.href='/selllist'"> Back to Selllist</button>
+        <p></p>
+        {% if post.published_date %}
+            <div class="date">
+                    <table style="border-collapse:collapse;">
+                    <tbody>
+                        <tr style="border-bottom:1px solid black;">
+                            <td style="padding:5px;">{{post.title}}</td> 
+                        </tr>
+                        <tr>
+                            <td style="padding:5px;">{{post.author}}</td> 
+                            <td style="padding:5px;">{{post.published_date}}</td> 
+                        </tr>
+                    </tbody>
+                    <table/>
+            </div>
+        {% endif %}
+        {% if user.is_authenticated and user == post.author %}
+            <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}">Edit</a>   
+            <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}">Remove</a>
+         {% else %}
+            <p>게시자만 수정이 가능합니다.</p>
+        {% endif %}
+        <p></p>
+        <p></p>
+        <table style="border-collapse:collapse;">
+            <tbody>
+                <tr>
+                    <td style="padding:5px;">Product type</td>
+                    <td style="padding:5px;border-left:1px solid black;">{{post.ptype}}</td>   
+                </tr>
+               <tr>
+                    <td style="padding:5px;">Product name</td>
+                    <td style="padding:5px;border-left:1px solid black;">{{post.pname}}</td>   
+                </tr>
+               <tr>
+                    <td style="padding:5px;">Price</td>
+                    <td style="padding:5px;border-left:1px solid black;">{{post.price}}</td>   
+                </tr>
+            </tbody>
+        </table>
+        {% if post.file %}
+            <a id="id_uploaded_file" href="{{ post.file.url }}" download>{{ post.file.name }}</a>
+        {% endif %}
+        <p>{{ post.text|linebreaksbr }}</p>
+    </div>
+{% endblock %}
