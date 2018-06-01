@@ -67,6 +67,8 @@ def mainpage(request):
     else:
         return login(request)
 
+
+# Show user information and trade information.
 def mypage(request):
     if request.user.is_authenticated:
         current_user = Student.objects.get(username=request.user.username)
