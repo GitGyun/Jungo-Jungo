@@ -25,7 +25,7 @@ SECRET_KEY = 'y443qih!ky#j0s9c&*l+bec0e_=1pm@3j!@sqvd@#o%==yezfd'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'pythonanywhere.com']
+ALLOWED_HOSTS = ['kdgyun425.pythonanywhere.com']
 
 
 # Application definition
@@ -77,10 +77,10 @@ WSGI_APPLICATION = 'jungojungo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django_db',
-        'USER': 'django',
-        'PASSWORD': 'djpswd',
-        'HOST': '127.0.0.1',
+        'NAME': 'kdgyun425$django_db',
+        'USER': 'kdgyun425',
+        'PASSWORD': 'mysqlpswd',
+        'HOST': 'kdgyun425.mysql.pythonanywhere-services.com',
         'PORT': '3306',
     }
 }

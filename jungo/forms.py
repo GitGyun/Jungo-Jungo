@@ -1,6 +1,6 @@
 from django import forms
-from .models import *
-from .choices import *
+from .models import Student, Product, Wishlist, Selllist, Wishinfo, Sellinfo
+from .choices import STATUS_CHOICES, STATUS_CHOICES_B
 
 class SignupForm(forms.Form):
     username = forms.CharField(
@@ -75,18 +75,22 @@ class NewProdForm(forms.Form):
               }
         )
     )
-    prodtype = forms.ChoiceField(label="",
+    prodtype = forms.ChoiceField(label="Product Type",
                                 initial='',
                                 widget=forms.Select(),
                                 required=True, choices=STATUS_CHOICES)
     price = forms.CharField(
+        label ="Price",
         widget=forms.TextInput(
             attrs={ 'class':'form-control',}
             )
         )
     prodDesc = forms.CharField(
+        label="Product Description",
         widget=forms.TextInput(
-            attrs={ 'class':'form-control',}
+                attrs={
+                    'class':'form-control',
+                }
             )
         )
 
@@ -100,10 +104,10 @@ class NewProdForm(forms.Form):
                 pdesc=self.cleaned_data['prodDesc'],
                 author = author
             )
-            
+
             # Make a new Wishlist object.
             row = Wishlist.objects.create(product=newprod)
-            
+
             return row;
 
     def create_selllist(self, author):
@@ -116,12 +120,12 @@ class NewProdForm(forms.Form):
                 pdesc=self.cleaned_data['prodDesc'],
                 author = author
             )
-            
+
             # Make a new Wishlist object.
             row = Selllist.objects.create(product=newprod)
-            
+
             return row;
-            
+
     def save(self, pid):
         if self.is_valid():
             prod = Product.objects.get(pid=pid)
@@ -130,65 +134,73 @@ class NewProdForm(forms.Form):
             prod.price=self.cleaned_data['price']
             prod.pdesc=self.cleaned_data['prodDesc']
             prod.save()
-                
+
 
 class SearchField(forms.Form):
-    nameFilter = forms.CharField(required=False,
-    widget = forms.TextInput(
-        attrs={
-                'class': 'form-control',
-              }
-        )
-    )
-    typeFilter = forms.ChoiceField(label="",
-                                initial='',
-                                widget=forms.Select(),
-                                required=True, choices=STATUS_CHOICES_B)
+    nameFilter = forms.CharField(
+                    label="Product Name",
+                    required=False,
+                    widget = forms.TextInput(
+                                attrs={'class': 'form-control'}
+                            )
+                 )
+    typeFilter = forms.ChoiceField(label="Product Type",
+                                   initial='',
+                                   widget=forms.Select(),
+                                   required=True, choices=STATUS_CHOICES_B)
     priceLo = forms.CharField(
-        widget=forms.TextInput(
-            attrs={ 'class':'form-control',}
-            )
-        )
+                label="Price Min",
+                required=False,
+                widget=forms.TextInput(
+                    attrs={'class':'form-control'}
+                )
+              )
     priceHi = forms.CharField(
-        widget=forms.TextInput(
-            attrs={ 'class':'form-control',}
-            )
+                label="Price Max",
+                required=False,
+                widget=forms.TextInput(
+                attrs={ 'class':'form-control',}
+                )
         )
 
     def find_in_wishlist(self):
         if self.is_valid():
-            if self.cleaned_data['typeFilter'] == '0':
-               qset = Wishinfo.objects.filter(
-                    price__lte=self.cleaned_data['priceHi'],
-                    price__gte=self.cleaned_data['priceLo'],
-                    pname__contains=self.cleaned_data['nameFilter'],
-                )
-            else:
-                qset = Wishinfo.objects.filter(
-                    price__lte=self.cleaned_data['priceHi'],
-                    price__gte=self.cleaned_data['priceLo'],
-                    pname__contains=self.cleaned_data['nameFilter'],
-                    prodType=self.cleaned_data['typeFilter'],
-                )
+            # SELECT rows whose pname column contains given nameFilter.
+            qset = Wishinfo.objects.filter(pname__contains=self.cleaned_data['nameFilter'])
+
+            # SELECT rows whose prodType column is given typeFilter.
+            if self.cleaned_data['typeFilter'] != '0':
+                qset = qset.filter(prodType=self.cleaned_data['typeFilter'])
+
+            # SELECT rows whose price is higher than given priceHi.
+            if self.cleaned_data['priceHi'] != '':
+                qset = qset.filter(price__lte=self.cleaned_data['priceHi'])
+
+            # SELECT rows whose price is lower than given priceLo.
+            if self.cleaned_data['priceLo'] != '':
+                qset = qset.filter(price__gte=self.cleaned_data['priceLo'])
+
             return qset;
 
     def find_in_selllist(self):
         if self.is_valid():
-            if self.cleaned_data['typeFilter'] == '0':
-                    qset = Sellinfo.objects.filter(
-                    price__lte=self.cleaned_data['priceHi'],
-                    price__gte=self.cleaned_data['priceLo'],
-                    pname__contains=self.cleaned_data['nameFilter'],
-                )
-            else:
-                qset = Sellinfo.objects.filter(
-                    price__lte=self.cleaned_data['priceHi'],
-                    price__gte=self.cleaned_data['priceLo'],
-                    pname__contains=self.cleaned_data['nameFilter'],
-                    prodType=self.cleaned_data['typeFilter'],
-                )
+            # SELECT rows whose pname column contains given nameFilter.
+            qset = Sellinfo.objects.filter(pname__contains=self.cleaned_data['nameFilter'])
+
+            # SELECT rows whose prodType column is given typeFilter.
+            if self.cleaned_data['typeFilter'] != '0':
+                qset = qset.filter(prodType=self.cleaned_data['typeFilter'])
+
+            # SELECT rows whose price is higher than given priceHi.
+            if self.cleaned_data['priceHi'] != '':
+                qset = qset.filter(price__lte=self.cleaned_data['priceHi'])
+
+            # SELECT rows whose price is lower than given priceLo.
+            if self.cleaned_data['priceLo'] != '':
+                qset = qset.filter(price__gte=self.cleaned_data['priceLo'])
+
             return qset;
-            
+
 
 class Edit_LoginForm(forms.Form):
     password = forms.CharField(

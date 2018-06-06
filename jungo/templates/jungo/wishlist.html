@@ -14,7 +14,7 @@ button {
 	font-size: 14px;
 }
 button:hover {
-	background-color: lightgreen;	
+	background-color: lightgreen;
 	color: black;
 }
 div.wrap_button {
@@ -72,7 +72,7 @@ a.disabled{
 a:link, a:visited {
     color: green;
     padding: 0px 4px;
-    text-align: center; 
+    text-align: center;
     text-decoration: none;
     display: inline-block;
 }
@@ -98,7 +98,7 @@ div.header {
 	height:max-content;
 	background-color: #9bf442;
 	padding : 0 0;
-	margin: 0 -4;	
+	margin: 0 -4;
 	text-align: center;
 }
 
@@ -108,7 +108,7 @@ div.head1 {
 	height: auto;
 	text-align:center;
 	padding: 4 0;
-	display:inline-block;	
+	display:inline-block;
 	margin: 0 -4;
 }
 
@@ -203,22 +203,22 @@ div.commit {
 	<div class="menu_left">
 	<h3 class="here"> Wishlist</h3>
 	<ul>
-	 <li class="here"> <div class="xspacing"></div><a href="/wishlist/" class="here">Search for demands</a> </li> 
-	 <li> <div class="xspacing"></div><a href="/wishlist_new/">Add new post</a> </li> 
-	 <li> <div class="xspacing"></div><a>Details</a> </li> 
+	 <li class="here"> <div class="xspacing"></div><a href="/wishlist/" class="here">Search for demands</a> </li>
+	 <li> <div class="xspacing"></div><a href="/wishlist_new/">Add new post</a> </li>
+	 <li> <div class="xspacing"></div><a>Details</a> </li>
 	</ul>
 		<div class="wspace" ></div>
 	<h3> Selllist</h3>
 	<ul>
-	 <li> <div class="xspacing"></div><a href="/selllist/">Search for products</a></li> 
-	 <li> <div class="xspacing"></div><a href="/selllist_new/">Add new product</a></li> 
-	 <li> <div class="xspacing"></div><a>Details</a> </li> 
+	 <li> <div class="xspacing"></div><a href="/selllist/">Search for products</a></li>
+	 <li> <div class="xspacing"></div><a href="/selllist_new/">Add new product</a></li>
+	 <li> <div class="xspacing"></div><a>Details</a> </li>
 	</ul>
 		<div class="wspace"></div>
 	<h3> My page</h3>
 	<ul>
-	 <li> <div class="xspacing"></div><a href="/mypage/">My page</a> </li> 
-	 <li> <div class="xspacing"></div> <a>Edit post</a> </li>  
+	 <li> <div class="xspacing"></div><a href="/mypage/">My page</a> </li>
+	 <li> <div class="xspacing"></div> <a>Edit post</a> </li>
 	</ul>
 	</div>
 
@@ -234,24 +234,24 @@ div.commit {
 
 		{% csrf_token %}
 		{% for field in search_form %}
-        
+
 			<div class="form-group {% if field.errors %}has-error{% endif %}">
-				<div class="label">{{ field.label_tag }}</div>
+				<div class="label"><strong>{{ field.label_tag }}</strong></div>
 				{{ field }}
 				{% if field.errors %}
 					{% for error in field.errors %}
-                    
+
 					<span class="help-block">{{ error }}</span>
-                    
+
                     {% endfor %}
-                    
+
 				{% endif %}
             </div>
-            
+
 		{% endfor %}
 
 		{% if signup_form.non_field_errors %}
-        
+
 			{% for error in search_form.non_field_errors %}
 
 			<p class="text-danger"><b>{{ error }}</b></p>
@@ -270,7 +270,7 @@ div.commit {
 <table align=center>
     <tr>
     <td class="topcol"> # </td>
-    <td class="topcol"> Type </td>
+    <td class="topcol" width="100"> Type </td>
     <td class="topcol" width="200"> Name </td>
     <td class="topcol"> Price </td>
     <td class="topcol"> Details ... </td>
@@ -279,7 +279,17 @@ div.commit {
     {% for post in posts %}
         <tr>
         <td> {{ forloop.counter0 }} </td>
-        <td> {{ post.prodType }} </td>
+        <td>
+		    {% if post.prodType == 'A' %}
+		        Appliances
+		    {% elif post.prodType  == 'B' %}
+		        Textbooks
+		    {% elif post.prodType  == 'C' %}
+		        Vehicles
+		    {% else %}
+		        Others
+		    {% endif %}
+        </td>
         <td> {{ post.pname }} </td>
         <td> {{ post.price }} </td>
         <td> <a href="/post/wishlist/{{ post.pid }}"> Details... </a> </td>

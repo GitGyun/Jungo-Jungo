@@ -14,7 +14,7 @@ button {
 	font-size: 14px;
 }
 button:hover {
-	background-color: lightgreen;	
+	background-color: lightgreen;
 	color: black;
 }
 div.wrap_button {
@@ -72,7 +72,7 @@ a.disabled{
 a:link, a:visited {
     color: green;
     padding: 0px 4px;
-    text-align: center; 
+    text-align: center;
     text-decoration: none;
     display: inline-block;
 }
@@ -98,7 +98,7 @@ div.header {
 	height:max-content;
 	background-color: #9bf442;
 	padding : 0 0;
-	margin: 0 -4;	
+	margin: 0 -4;
 	text-align: center;
 }
 
@@ -108,7 +108,7 @@ div.head1 {
 	height: auto;
 	text-align:center;
 	padding: 4 0;
-	display:inline-block;	
+	display:inline-block;
 	margin: 0 -4;
 }
 
@@ -204,22 +204,22 @@ div.commit {
 	<div class="menu_left">
 	<h3> Wishlist</h3>
 	<ul>
-	 <li> <div class="xspacing"></div><a href="/wishlist/">Search for demands</a> </li> 
-	 <li> <div class="xspacing"></div><a href="/wishlist_new/">Add new post</a> </li> 
-	 <li> <div class="xspacing"></div><a>Details</a> </li> 
+	 <li> <div class="xspacing"></div><a href="/wishlist/">Search for demands</a> </li>
+	 <li> <div class="xspacing"></div><a href="/wishlist_new/">Add new post</a> </li>
+	 <li> <div class="xspacing"></div><a>Details</a> </li>
 	</ul>
 		<div class="wspace" ></div>
 	<h3> Selllist</h3>
 	<ul>
-	 <li> <div class="xspacing"></div><a href="/selllist/">Search for products</a></li> 
-	 <li> <div class="xspacing"></div><a href="/selllist_new/">Add new product</a></li> 
-	 <li> <div class="xspacing"></div><a>Details</a> </li> 
+	 <li> <div class="xspacing"></div><a href="/selllist/">Search for products</a></li>
+	 <li> <div class="xspacing"></div><a href="/selllist_new/">Add new product</a></li>
+	 <li> <div class="xspacing"></div><a>Details</a> </li>
 	</ul>
 		<div class="wspace"></div>
 	<h3 class="here"> My page</h3>
 	<ul>
-	 <li class="here"> <div class="xspacing"></div><a href="/mypage/" class="here">My page</a> </li> 
-	 <li> <div class="xspacing"></div> <a>Edit post</a> </li>  
+	 <li class="here"> <div class="xspacing"></div><a href="/mypage/" class="here">My page</a> </li>
+	 <li> <div class="xspacing"></div> <a>Edit post</a> </li>
 	</ul>
 	</div>
 
@@ -299,8 +299,8 @@ div.commit {
             <br>
             Seller Userame: <a href="/userinfo/{{ buy.buyername }}">{{ buy.buyername }}</a>
             <br>
+            <button onClick="window.location.href='/complete/{{ buy.pid }}';"> Confirm Trade </button>
             <button onClick="window.location.href='/cancel/{{ buy.pid }}';"> Cancel Trade </button>
-            <button onClick="window.location.href='/complete/{{ buy.pid }}';"> Complete Trade </button>
         </p>
 
     {% endfor %}
@@ -326,8 +326,8 @@ div.commit {
 
             Buyer Userame: <a href="/userinfo/{{ sell.sellername }}">{{ sell.sellername }}</a>
             <br>
+            <button onClick="window.location.href='/complete/{{ sell.pid }}';"> Confirm Trade </button>
             <button onClick="window.location.href='/cancel/{{ sell.pid }}';"> Cancel Trade </button>
-            <button onClick="window.location.href='/complete/{{ sell.pid }}';"> Complete Trade </button>
 
         </p>
 
