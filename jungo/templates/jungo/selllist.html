@@ -1,11 +1,230 @@
-{% block title %}
-<p><h1> search page </h1></p>
-<p><h3> Find products to sell </h3></p>
-{% endblock %}
+<html>
+<head>
+<title>Product Information</title>
+<style>
+button {
+	font-weight: bold;
+	background-color: #9bf442;
+	border: none;
+	color: #4CAF50;
+	padding: 4px 22px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 14px;
+}
+button:hover {
+	background-color: lightgreen;	
+	color: black;
+}
+div.wrap_button {
+	margin: 8 8;
+	text-align: right;
+	}
+input[type=text] {
+    width: 45%;
+    padding: 6px 10px;
+    margin: 2px 0px;
+    box-sizing: border-box;
+    text-align:center;
+    display: inline-block;
+}
+input[type=password] {
+    width: 45%;
+    padding: 8px 16px;
+    margin: 0px 2px;
+    box-sizing: border-box;
+}
+select {
+	width: 45%
+}
+html,body {
+    margin: 0 0;
+    height: 100%;
+    background-color: #ebf7d3;
+    overflow: hidden;
+}
+div.product {
+	background-color: #e1fbad;
+	width: 400px;
+	line-height: 10px;
+	padding: 4px 4px;
+	border: 3px solid #a5c26a;
+	text-align: left;
+	margin: auto;
+}
+div.login {
+	background-color: #ebf7d3;
+	text-align: center;
+	border: 3px solid #a5c26a;
+	padding: 0px 0px;
+	margin: auto;
+	width:400px;
+}
+div.xspacing {
+	width: 0px;
+	display: inline-block;
+}
+a.disabled{
+	pointer-events:none;
+	cursor: default;
+}
+a:link, a:visited {
+    color: green;
+    padding: 0px 4px;
+    text-align: center; 
+    text-decoration: none;
+    display: inline-block;
+}
+a:hover, a:active {
+	padding: 0px 0px;
+	color: black;
+	font-weight: bold;
+	text-decoration: underline;
+}
+div.label {
+	width:35%;
+	text-align: center;
+	font-size: 14px;
+	padding: 0px 0px;
+	margin:auto;
+	line-height:3px;
+	display:inline-block;
+}
+div.wspace {
+	height:20px;
+}
+div.header {
+	height:max-content;
+	background-color: #9bf442;
+	padding : 0 0;
+	margin: 0 -4;	
+	text-align: center;
+}
+
+div.head1 {
+	font-weight: bold;
+	width:15%;
+	height: auto;
+	text-align:center;
+	padding: 4 0;
+	display:inline-block;	
+	margin: 0 -4;
+}
+
+div.head2 {
+	position: relative;
+	left: 0;
+	padding: 4 0;
+	width:55%;
+	text-align:center;
+	display:inline-block;
+
+	margin: 0 -4;
+}
+div.head3 {
+	position: relative;
+	left: 0;
+	padding: 4 0;
+	width: 29%;
+	text-align:center;
+	display:inline-block;
+	font-size: 14px;
+	margin: 0 -4;
+}
+div.bodyV {
+	width: 100%;
+	height: 100%;
+}
+
+div.menu_left {
+	width: 15%;
+	height: 100%;
+	text-align: left;
+	font-size: 14px;
+	background-color: #d5fcae;
+	padding: 10 14;
+	color: #558799;
+	display: inline-block;
+}
+
+div.bodyRecV {
+	padding: 10 14;
+	font-size: 14px;
+	height: 100%;
+	display: inline-block;
+	vertical-align: top;
+	overflow: hidden;
+}
+
+table {
+	font-size: 14px;
+	border: 3px solid green;
+	padding: 0 0;
+	margin: 18 18;
+}
+td {
+	height: 50px;
+	min-width: 50;
+	vertical-align: center;
+	margin: 0 0;
+}
+td.topcol {
+	font-weight: bold;
+	text-align: center;
+}
+
+div.commit {
+	position: relative;
+	left: 25px;
+}
+*.here {
+	color: black !important;
+	font-weight: bold;
+}
 
 
-<button onClick="window.location.href='/mainpage'"> Back to Main Page </button>
-<p> <button onClick="window.location.href='/selllist_new';"> Sell_Register </button> </p>
+</style>
+</head>
+<body>
+<div class="header">
+	<div class="head1"> <a href="/">Home</a></div>
+	<div class="head2">
+	    <button onClick="window.location.href='/wishlist/';"> Wishlist </button>
+		<div class="xspacing"></div>
+	    <button onClick="window.location.href='/selllist/';"> Selllist </button>
+		<div class="xspacing"></div>
+	    <button onClick="window.location.href='/mypage/';"> Mypage </button>
+	</div>
+	<div class="head3">You are logged in as <b>{{ user.username }}</b>. <button onClick="window.location.href='/logout';"> Log Out </button></div>
+</div>
+
+<div class="bodyV">
+	<div class="menu_left">
+	<h3> Wishlist</h3>
+	<ul>
+	 <li> <div class="xspacing"></div><a href="/wishlist/">Search for demands</a> </li> 
+	 <li> <div class="xspacing"></div><a href="/wishlist_new/">Add new post</a> </li> 
+	 <li> <div class="xspacing"></div><a>Details</a> </li> 
+	</ul>
+		<div class="wspace" ></div>
+	<h3 class="here"> Selllist</h3>
+	<ul>
+	 <li class="here"> <div class="xspacing"></div><a href="/selllist/" class="here">Search for products</a></li> 
+	 <li> <div class="xspacing"></div><a href="/selllist_new/">Add new product</a></li> 
+	 <li> <div class="xspacing"></div><a>Details</a> </li> 
+	</ul>
+		<div class="wspace"></div>
+	<h3> My page</h3>
+	<ul>
+	 <li> <div class="xspacing"></div><a href="/mypage/">My page</a> </li> 
+	 <li> <div class="xspacing"></div> <a>Edit post</a> </li>  
+	</ul>
+	</div>
+
+<div class="bodyRecV">
+
+<h1> Selllist &gt; Search </h1>
 
 {% block content %}
 
@@ -17,10 +236,9 @@
 		{% for field in search_form %}
         
 			<div class="form-group {% if field.errors %}has-error{% endif %}">
-				{{ field.label_tag }}
+				<div class="label">{{ field.label_tag }}</div>
 				{{ field }}
 				{% if field.errors %}
-                
 					{% for error in field.errors %}
                     
 					<span class="help-block">{{ error }}</span>
@@ -41,31 +259,35 @@
 			{% endfor %}
 
 		{% endif %}
+<div class="wrap_button" align=center><button class="btn btn-primary btn-block">Search</button></div>
 
-		<button class="btn btn-primary btn-block">Search</button>
 
 	</form></div>
 
 {% endblock %}
 
 
-<table align=center cellpadding=0 cellspacing=2 border=1 bordercolor=222222>
+<table align=center>
     <tr>
-    <td> # </td>
-    <td> Product Type </td>
-    <td> Product Name </td>
-    <td> Price </td>
-    <td> Details ... </td>
+    <td class="topcol"> # </td>
+    <td class="topcol"> Type </td>
+    <td class="topcol" width="200"> Name </td>
+    <td class="topcol"> Price </td>
+    <td class="topcol"> Details ... </td>
     </tr>
 
     {% for post in posts %}
         <tr>
-        <td> {{ post.product.pid }} </td>
-        <td> {{ post.product.prodType }} </td>
-        <td> {{ post.product.pname }} </td>
-        <td> {{ post.product.price }} </td>
-        <td> <a href="{% url 'selllist_detail' pk=post.pk %}"> Details... </a> </td>
+        <td> {{ forloop.counter0 }} </td>
+        <td> {{ post.prodType }} </td>
+        <td> {{ post.pname }} </td>
+        <td> {{ post.price }} </td>
+        <td> <a href="/post/selllist/{{ post.pid }}"> Details... </a> </td>
         </tr>
     {% endfor %}
 
 </table>
+</div>
+</body>
+</html>
+</html>

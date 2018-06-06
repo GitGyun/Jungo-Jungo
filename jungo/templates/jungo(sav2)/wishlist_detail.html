@@ -2,27 +2,8 @@
     <div class="post">
         <button onClick="window.location.href='/wishlist'"> Back to Wishlist</button>
         <p></p>
-
-        {% if post.published_date %}
-            <div class="date">
-                    <table style="border-collapse:collapse;">
-                    <tbody>
-                        <tr style="border-bottom:1px solid black;">
-                            <td style="padding:5px;">{{post.title}}</td> 
-                        </tr>
-                        <tr>
-                            <td style="padding:5px;">{{post.author}}</td> 
-                            <td style="padding:5px;">{{post.published_date}}</td> 
-                        </tr>
-                    </tbody>
-                    <table/>
-            </div>
-
-        {% endif %}
-        <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}">Edit</a>   
-        <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}">Remove</a>
         {% if user.is_authenticated and user == post.author %}
-            <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}">Edit</a>   
+            <a class="btn btn-default" href="{% url 'wish_edit' pk=post.pk %}">Edit</a>   
             <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}">Remove</a>
          {% else %}
             <p>게시자만 수정이 가능합니다.</p>
@@ -42,6 +23,10 @@
                <tr>
                     <td style="padding:5px;">Price</td>
                     <td style="padding:5px;border-left:1px solid black;">{{post.price}}</td>   
+                </tr>
+                <tr>
+                    <td style="padding:5px;">Wisher</a></td>
+                    <td style="padding:5px;border-left:1px solid black;"><a href="/userinfo/{{ wisher }}">{{wisher}}</a></td>
                 </tr>
             </tbody>
         </table>

@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import SignupForm, LoginForm, SearchField, NewProdForm
-from .models import Student, Wishlist, Selllist, Matchlist, Product
+from .forms import SignupForm, LoginForm, SearchField, NewProdForm, Edit_LoginForm
+from .models import *
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
+from django.contrib.auth import logout as django_logout
 from django.template import RequestContext
 from django.utils import timezone
 from django.http import HttpResponse
@@ -38,7 +39,7 @@ def login(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 django_login(request, user)
-                return mainpage(request)
+                return mypage(request)
             else:
                 return HttpResponse('로그인 실패, 다시 시도 해보세요.')
     
@@ -50,40 +51,26 @@ def login(request):
         return render(request, 'jungo/login.html', context)
 
 
-# Retrun Main Page of the Site with authenticated user information.
-def mainpage(request):
-    if request.user.is_authenticated:
-        # Superuser.
-        if request.user.is_superuser:
-            return render(request, 'jungo/mainpage.html', {'username': Superuser})
-            
-        
-        curr_user = Student.objects.get(username=request.user.username)
-        context = {
-            'username': curr_user.username
-        }
-        return render(request, 'jungo/mainpage.html', context)
-    
-    else:
-        return login(request)
+# Logout user.
+def logout(request):
+    django_logout(request)
+    return render(request, 'jungo/index.html')
 
 
 # Show user information and trade information.
 def mypage(request):
     if request.user.is_authenticated:
-        current_user = Student.objects.get(username=request.user.username)
         context = {
-            'userinfo': Student.objects.filter(username=request.user.username).values(
-                                'username', 'student_id', 'email', 'phone_no', 'balance')[0],
-            'wishinfo': current_user.wishlists.all(),
-            'sellinfo': current_user.selllists.all(),
-            'buyreq': current_user.matchlists_buyer.all(),
-            'sellreq': current_user.matchlists_seller.all(),
+            'userinfo': Userinfo.objects.get(username=request.user.username),
+            'wishinfo': Wishinfo.objects.filter(username=request.user.username),
+            'sellinfo': Sellinfo.objects.filter(username=request.user.username),
+            'buyerinfo': Matchinfo.objects.filter(sellername=request.user.username),
+            'sellerinfo': Matchinfo.objects.filter(buyername=request.user.username),
         }
         return render(request, 'jungo/mypage.html', context)
     
     else:
-        HttpResponse("You're not logged in!")
+        return login(request)
 
     
 # Sell a product from the Wishlist.    
@@ -105,7 +92,7 @@ def sell(request, pid):
     # delete the product from the Wishlist.
     row.delete()
     
-    return mainpage(request)
+    return mypage(request)
 
 
 # Buy a proudct from the Selllist.
@@ -127,66 +114,77 @@ def buy(request, pid):
     # delete the product from the Wishlist.
     row.delete()
     
-    return mainpage(request)
+    return mypage(request)
 
 
-# Edit a post with NewProdForm.
-def post_edit(request, pk):
-    post = Product.objects.get(pid=pk)
-    #post = get_object_or_404(Product, pk=pk)
+# Edit a post in the Wishlist with NewProdForm.
+def wish_edit(request, pk):
     if request.method == "POST":
-        form = NewProdForm(request.POST, instance=post)
+        form = NewProdForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=False)
-            #post.author = request.user
-            post.save()
-            return redirect('post_detail', pk=post.pk)
+            form.save(pk)
+            return render(request, 'jungo/mypage.html', {'form': form})
+            
     else:
         form = NewProdForm()
-        return render(request, 'jungo/post_edit.html', {'form': form})
-
-
-# Edit a post in the Selllist with NewProdForm.
-def sell_post_edit(request, pk):
-    post = get_object_or_404(Product, pk=pk)
-    if request.method == "POST":
-        form = NewProdForm(request.POST, instance=post)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.save()
-            return redirect('sell_post_detail', pk=post.pk)
-    else:
-        form = NewProdForm(instance=post)
-        return render(request, 'jungo/sell_post_edit.html', {'form': form})
+        return render(request, 'jungo/wish_edit.html', {'form': form})
         
 
-# Remove a post.
-def post_remove(request, pk):
-    post = get_object_or_404(Product, pk=pk)
+# Edit a post in the Selllist with NewProdForm.
+def sell_edit(request, pk):
+    if request.method == "POST":
+        form = NewProdForm(request.POST)
+        if form.is_valid():
+            form.save(pk)
+            return render(request, 'jungo/mypage.html', {'form': form})
+
+    else:
+        form = NewProdForm()
+        return render(request, 'jungo/sell_edit.html', {'form': form})
+        
+
+# Remove a post in the Wishlist.
+def wish_remove(request, pk):
+    post = Product.objects.get(pk=pk)
     post.delete()
     return redirect('wishlist')
 
 
 # Remove a post in the Selllist.    
-def sell_post_remove(request, pk):
-    post = get_object_or_404(Product, pk=pk)
+def sell_remove(request, pk):
+    post = Product.objects.get(pk=pk)
     post.delete()
     return redirect('selllist')
 
 
-# Show details about a post in the Wishlist.
-def wishlist_detail(request, pk):
-    post = get_object_or_404(Product, pk=pk)
-    return render(request, 'jungo/wishlist_detail.html', {'post': post})
-
-
-# Show details about a post in the Selllist.
-def selllist_detail(request, pk):
-    post = get_object_or_404(Product, pk=pk)
-    return render(request, 'jungo/selllist_detail.html', {'post': post})
+# Show details about a post.
+def prod_detail(request, pid, prod_state):
+    post = Product.objects.get(pid=pid)
+    if prod_state == 'wishlist':
+        wisher = Wishinfo.objects.get(pid=pid).username
+        context = {
+            'post': post,
+            'wisher': wisher,
+            'prod_state': 'wishlist'
+        }
+    elif prod_state == 'selllist':
+        seller = Sellinfo.objects.get(pid=pid).username
+        context = {
+            'post': post,
+            'seller': seller,
+            'prod_state': 'selllist'
+        }
+    else:
+        buyer = Matchinfo.objects.get(pid=pid).buyername
+        seller = Matchinfo.objects.get(pid=pid).sellername
+        context = {
+            'post': post,
+            'buyer': buyer,
+            'seller': seller,
+            'prod_state': 'matchlist'
+        }
+    return render(request, 'jungo/prod_detail.html', context)
     
-
 
 # Write a new post in the Wishlist. 
 def write_wishlist(request):
@@ -195,9 +193,9 @@ def write_wishlist(request):
     if request.method == "POST":
         prod_form = NewProdForm(request.POST)
         if prod_form.is_valid():
-            row = prod_form.create_wishlist()
+            row = prod_form.create_wishlist(curr_user)
             row.buyer.add(curr_user)
-            return redirect('mainpage')
+            return redirect('mypage')
             
     else:
         prod_form = NewProdForm()
@@ -215,9 +213,9 @@ def write_selllist(request):
     if request.method == "POST":
         prod_form = NewProdForm(request.POST)
         if prod_form.is_valid():
-            row = prod_form.create_selllist()
+            row = prod_form.create_selllist(curr_user)
             row.seller.add(curr_user)
-            return redirect('mainpage')
+            return redirect('mypage')
             
     else:
         prod_form = NewProdForm()
@@ -241,7 +239,7 @@ def get_wishlist(request):
             return render(request, 'jungo/wishlist.html', context)
             
     else:
-        posts = Wishlist.objects.all()
+        posts = Wishinfo.objects.all()
         search_form = SearchField()
         context = {
             'search_form': search_form,
@@ -255,18 +253,101 @@ def get_selllist(request):
     if request.method == "POST":
         search_form = SearchField(request.POST)
         if search_form.is_valid():
-            posts = search_form.find_in_wishlist()
+            posts = search_form.find_in_selllist()
             context = {
-                'search_form' : search_form,
-                'posts' : posts,
+                'search_form': search_form,
+                'posts': posts,
                 }
             return render(request, 'jungo/selllist.html', context)
             
     else:
-        posts = Selllist.objects.all()
+        posts = Sellinfo.objects.all()
         search_form = SearchField()
         context = {
             'search_form': search_form,
-            'posts' : posts,
+            'posts': posts,
         }
         return render(request, 'jungo/selllist.html', context)
+
+
+# Show user information.
+def userinfo(request, username):
+    info = Userinfo.objects.get(username=username)
+    context = {
+        'userinfo': info
+    }
+    return render(request, 'jungo/userinfo.html', context)
+
+
+# Edit user information.
+def edit_login(request):
+    current_user = Student.objects.get(username=request.user.username)
+    if request.method == "POST":
+        edit_signup_form = Edit_LoginForm(request.POST)
+        if edit_signup_form.is_valid():
+            edit_signup_form.edit_login(current_user.student_id)
+            return mypage(request)
+    else:
+        edit_signup_form = Edit_LoginForm()
+        context = {
+            'signup_form': edit_signup_form,
+        }
+        return render(request, 'jungo/edit_login.html', context) 
+
+
+# Complete or Cancel the trade.
+def cancel(request, pid):
+    curr_user = Student.objects.get(username=request.user.username)
+    
+    # Re-insert the product into Wishlist/Selllist.
+    info = Matchinfo.objects.get(pid=pid)
+    prod = Product.objects.get(pid=pid)
+    
+    # User is buyer.
+    if curr_user.username == info.buyername:
+        # The product was in Wishlist.
+        if prod.author.username == curr_user.username:
+            row = Wishlist(product=prod)
+            row.save()
+            row.buyer.add(curr_user)
+            
+        # The product was in Selllist.
+        else:
+            seller = Student.objects.get(username=info.sellername)
+            row = Selllist(product=prod)
+            row.save()
+            row.seller.add(seller)
+    
+    # User is seller.
+    else:
+        # The product was in Selllist.
+        if prod.author.username == curr_user.username:
+            row = Selllist(product=prod)
+            row.save()
+            row.seller.add(curr_user)
+            
+        # The product was in Selllist.
+        else:
+            buyer = Student.objects.get(username=info.buyername)
+            row = Wishlist(product=prod)
+            row.save()
+            row.buyer.add(buyer)
+             
+    
+    # Delete the product from Matchlist.
+    match = Matchlist.objects.get(product_id=pid)
+    match.delete()
+    
+    return mypage(request)
+    
+
+# Complete the trade.
+def complete(request, pid):
+    prod = Product.objects.get(pid=pid)
+    prod.pstate += 1
+    prod.save()
+    
+    if prod.pstate == 2:
+        prod.delete()
+    
+    return mypage(request)

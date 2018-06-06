@@ -1,72 +1,356 @@
+<html>
+<head>
+<title>My Page</title>
+<style>
+button {
+	font-weight: bold;
+	background-color: #9bf442;
+	border: none;
+	color: #4CAF50;
+	padding: 4px 22px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 14px;
+}
+button:hover {
+	background-color: lightgreen;	
+	color: black;
+}
+div.wrap_button {
+	margin: 8 8;
+	text-align: right;
+	}
+input[type=text] {
+    width: 45%;
+    padding: 6px 10px;
+    margin: 2px 0px;
+    box-sizing: border-box;
+    text-align:center;
+    display: inline-block;
+}
+input[type=password] {
+    width: 45%;
+    padding: 8px 16px;
+    margin: 0px 2px;
+    box-sizing: border-box;
+}
+select {
+	width: 45%
+}
+html,body {
+    margin: 0 0;
+    height: 100%;
+    background-color: #ebf7d3;
+    overflow: hidden;
+}
+div.product {
+	background-color: #e1fbad;
+	width: 400px;
+	line-height: 10px;
+	padding: 4px 4px;
+	border: 3px solid #a5c26a;
+	text-align: left;
+	margin: auto;
+}
+div.login {
+	background-color: #ebf7d3;
+	text-align: center;
+	border: 3px solid #a5c26a;
+	padding: 0px 0px;
+	margin: auto;
+	width:400px;
+}
+div.xspacing {
+	width: 0px;
+	display: inline-block;
+}
+a.disabled{
+	pointer-events:none;
+	cursor: default;
+}
+a:link, a:visited {
+    color: green;
+    padding: 0px 4px;
+    text-align: center; 
+    text-decoration: none;
+    display: inline-block;
+}
+a:hover, a:active {
+	padding: 0px 0px;
+	color: black;
+	font-weight: bold;
+	text-decoration: underline;
+}
+div.label {
+	width:35%;
+	text-align: center;
+	font-size: 14px;
+	padding: 0px 0px;
+	margin:auto;
+	line-height:3px;
+	display:inline-block;
+}
+div.wspace {
+	height:20px;
+}
+div.header {
+	height:max-content;
+	background-color: #9bf442;
+	padding : 0 0;
+	margin: 0 -4;	
+	text-align: center;
+}
+
+div.head1 {
+	font-weight: bold;
+	width:15%;
+	height: auto;
+	text-align:center;
+	padding: 4 0;
+	display:inline-block;	
+	margin: 0 -4;
+}
+
+div.head2 {
+	position: relative;
+	left: 0;
+	padding: 4 0;
+	width:55%;
+	text-align:center;
+	display:inline-block;
+
+	margin: 0 -4;
+}
+div.head3 {
+	position: relative;
+	left: 0;
+	padding: 4 0;
+	width: 29%;
+	text-align:center;
+	display:inline-block;
+	font-size: 14px;
+	margin: 0 -4;
+}
+div.bodyV {
+	width: 100%;
+	height: 100%;
+}
+
+div.menu_left {
+	width: 15%;
+	height: 100%;
+	text-align: left;
+	font-size: 14px;
+	background-color: #d5fcae;
+	padding: 10 14;
+	color: #558799;
+	display: inline-block;
+}
+
+div.bodyRecV {
+	padding: 10 14;
+	font-size: 14px;
+	height: 94%;
+    width: 81.5%;
+	display: inline-block;
+	vertical-align: top;
+	overflow: scroll;
+}
+
+table {
+	font-size: 14px;
+	border: 3px solid green;
+	padding: 0 0;
+	margin: 18 18;
+}
+td {
+	height: 50px;
+	min-width: 50;
+	vertical-align: center;
+	margin: 0 0;
+}
+td.topcol {
+	font-weight: bold;
+	text-align: center;
+}
+
+div.commit {
+	position: relative;
+	left: 25px;
+}
+*.here {
+	color: black !important;
+	font-weight: bold;
+}
+
+
+</style>
+</head>
+<body>
+<div class="header">
+	<div class="head1"> <a href="/">Home</a></div>
+	<div class="head2">
+	    <button onClick="window.location.href='/wishlist/';"> Wishlist </button>
+		<div class="xspacing"></div>
+	    <button onClick="window.location.href='/selllist/';"> Selllist </button>
+		<div class="xspacing"></div>
+	    <button onClick="window.location.href='/mypage/';"> Mypage </button>
+	</div>
+	<div class="head3">You are logged in as <b>{{ user.username }}</b>. <button onClick="window.location.href='/logout';"> Log Out </button></div>
+</div>
+
+<div class="bodyV">
+	<div class="menu_left">
+	<h3> Wishlist</h3>
+	<ul>
+	 <li> <div class="xspacing"></div><a href="/wishlist/">Search for demands</a> </li> 
+	 <li> <div class="xspacing"></div><a href="/wishlist_new/">Add new post</a> </li> 
+	 <li> <div class="xspacing"></div><a>Details</a> </li> 
+	</ul>
+		<div class="wspace" ></div>
+	<h3> Selllist</h3>
+	<ul>
+	 <li> <div class="xspacing"></div><a href="/selllist/">Search for products</a></li> 
+	 <li> <div class="xspacing"></div><a href="/selllist_new/">Add new product</a></li> 
+	 <li> <div class="xspacing"></div><a>Details</a> </li> 
+	</ul>
+		<div class="wspace"></div>
+	<h3 class="here"> My page</h3>
+	<ul>
+	 <li class="here"> <div class="xspacing"></div><a href="/mypage/" class="here">My page</a> </li> 
+	 <li> <div class="xspacing"></div> <a>Edit post</a> </li>  
+	</ul>
+	</div>
+
+<div class="bodyRecV">
+
 {% block content %}
 
-<button onClick="window.location.href='/mainpage'"> Back to Main Page </button>
 
+<h1> My page</h1>
 {% if userinfo %}
     <p>Welcome, {{ userinfo.username }}</p>
-    <p>Your student id: {{ userinfo.student_id }}</p>
-    <p>Your email: {{ userinfo.email }}</p>
-    <p>Your phone number: {{ userinfo.phone_no }}</p>
-    <p>Your balance: {{ userinfo.balance }}</p>
+    <a href="/userinfo/{{ userinfo.username }}">Your User Information</a>
 {% endif %}
+
+<br>
+<br>
+
+<h2>Your Posts</h2>
 
 <h3>Your wishlist</h3>
+
 {% if wishinfo %}
+
     {% for wish in wishinfo %}
+
         <p>
-            Product Name: {{ wish.product.pname }}<br>
-            Product Price: {{ wish.product.price }}
+
+            Product Name: <a href="/post/wishlist/{{ wish.pid }}">{{ wish.pname }}</a>
+            <br>
+            Product Price: {{ wish.price }}
         </p>
+
     {% endfor %}
+
 {% else %}
-<p>You haven't write a wishlist.</p>
+
+<p>Your wishlist is empty.</p>
+
 {% endif %}
+
 
 <h3>Your selllist</h3>
+
 {% if sellinfo %}
+
     {% for sell in sellinfo %}
+
         <p>
-            Product Name: {{ sell.product.pname }}<br>
-            Product Price: {{ sell.product.price }}
+
+            Product Name: <a href="/post/selllist/{{ sell.pid }}">{{ sell.pname }}</a>
+            <br>
+            Product Price: {{ sell.price }}
         </p>
     {% endfor %}
+
 {% else %}
-<p>You haven't write a selllist.</p>
+
+<p>Your selllist is empty.</p>
+
 {% endif %}
 
-<h2>Proceeding Trade</h2>
-<h3>Sell</h3>
-{% if buyreq %}
-    {% for buy in buyreq %}
+<br>
+
+<h2>Participating Trade</h2>
+
+<h3>To Sell</h3>
+
+{% if buyerinfo %}
+
+    {% for buy in buyerinfo %}
+
         <p>
-            Product Name: {{ buy.product.pname }}<br>
-            Product Price: {{ buy.product.price }}<br>
-            
-            {% for user in buy.seller.all %}
-            Seller Userame: {{ user.username }}<br>
-            Seller Phone Number: {{ user.phone_no }}
-            {% endfor %}
+
+            Product Name: <a href="/post/matchlist/{{ buy.pid }}">{{ buy.pname }}</a>
+            <br>
+            Product Price: {{ buy.price }}
+            <br>
+            Seller Userame: <a href="/userinfo/{{ buy.buyername }}">{{ buy.buyername }}</a>
+            <br>
+            <button onClick="window.location.href='/cancel/{{ buy.pid }}';"> Cancel Trade </button>
+            <button onClick="window.location.href='/complete/{{ buy.pid }}';"> Complete Trade </button>
         </p>
+
     {% endfor %}
+
 {% else %}
+
 <p>No requests.</p>
+
 {% endif %}
 
-<h3>Buy</h3>
-{% if sellreq %}
-    {% for sell in sellreq %}
+
+<h3>To Buy</h3>
+
+{% if sellerinfo %}
+
+    {% for sell in sellerinfo %}
+
         <p>
-            Product Name: {{ sell.product.pname }}<br>
-            Product Price: {{ sell.product.price }}<br>
-            
-            {% for user in sell.buyer.all %}
-            Buyer Userame: {{ user.username }}<br>
-            Buyer Phone Number: {{ user.phone_no }}
-            {% endfor %}
+
+            Product Name: {{ sell.pname }}<br>
+
+            Product Price: {{ sell.price }}<br>
+
+            Buyer Userame: <a href="/userinfo/{{ sell.sellername }}">{{ sell.sellername }}</a>
+            <br>
+            <button onClick="window.location.href='/cancel/{{ sell.pid }}';"> Cancel Trade </button>
+            <button onClick="window.location.href='/complete/{{ sell.pid }}';"> Complete Trade </button>
+
         </p>
+
     {% endfor %}
+
 {% else %}
 <p>No requests.</p>
+
 {% endif %}
+
 
 {% endblock %}
+
+
+
+
+
+
+</div>
+</div>
+</body>
+</html>
+</html>
+
+
+

@@ -1,12 +1,12 @@
 <html>
 <head>
-<title>Product Information</title>
+<title>My Page</title>
 <style>
 button {
 	font-weight: bold;
 	background-color: #9bf442;
 	border: none;
-	color: darkgreen;
+	color: #4CAF50;
 	padding: 4px 22px;
 	text-align: center;
 	text-decoration: none;
@@ -22,20 +22,21 @@ div.wrap_button {
 	text-align: right;
 	}
 input[type=text] {
-    position: relative;
-    right: 0;
     width: 45%;
-    padding: 8px 16px;
+    padding: 6px 10px;
     margin: 2px 0px;
     box-sizing: border-box;
     text-align:center;
-    display:inline-block;
+    display: inline-block;
 }
 input[type=password] {
     width: 45%;
     padding: 8px 16px;
     margin: 0px 2px;
     box-sizing: border-box;
+}
+select {
+	width: 45%
 }
 html,body {
     margin: 0 0;
@@ -52,7 +53,14 @@ div.product {
 	text-align: left;
 	margin: auto;
 }
-
+div.login {
+	background-color: #ebf7d3;
+	text-align: center;
+	border: 3px solid #a5c26a;
+	padding: 0px 0px;
+	margin: auto;
+	width:400px;
+}
 div.xspacing {
 	width: 0px;
 	display: inline-block;
@@ -71,22 +79,22 @@ a:link, a:visited {
 a:hover, a:active {
 	padding: 0px 0px;
 	color: black;
-	font-weight: bold;	
+	font-weight: bold;
 	text-decoration: underline;
 }
-select {
-	width: 45%;
-}
 div.label {
-	position: relative;
-	left: 10%;
 	width:35%;
-	text-align: left;
+	text-align: center;
 	font-size: 14px;
 	padding: 0px 0px;
 	margin:auto;
 	line-height:3px;
 	display:inline-block;
+}
+p {
+	text-align:left;
+	font-size:14px;
+	margin: 4 20;
 }
 div.wspace {
 	height:20px;
@@ -133,7 +141,10 @@ div.bodyV {
 	width: 100%;
 	height: 100%;
 }
-
+div.btnwrapper {
+	text-align:right;
+	padding : 0 10;
+}
 div.menu_left {
 	width: 15%;
 	height: 100%;
@@ -151,21 +162,26 @@ div.bodyRecV {
 	height: 100%;
 	display: inline-block;
 	vertical-align: top;
+	overflow: hidden;
 }
 
 table {
 	font-size: 14px;
-	border: 1px solid red;
+	border: 3px solid green;
+	padding: 0 0;
 	margin: 18 18;
 }
 td {
 	height: 50px;
-	min-width: 200;
+	min-width: 50;
 	vertical-align: center;
+	margin: 0 0;
 }
-td.leftcol {
+td.topcol {
+	font-weight: bold;
 	text-align: center;
 }
+
 div.commit {
 	position: relative;
 	left: 25px;
@@ -174,11 +190,7 @@ div.commit {
 	color: black !important;
 	font-weight: bold;
 }
-div.btnwrapper {
-	position: relative;
-	left:70%;
-	bottom: -8px;
-}
+
 
 </style>
 </head>
@@ -197,10 +209,10 @@ div.btnwrapper {
 
 <div class="bodyV">
 	<div class="menu_left">
-	<h3 class="here"> Wishlist</h3>
+	<h3> Wishlist</h3>
 	<ul>
 	 <li> <div class="xspacing"></div><a href="/wishlist/">Search for demands</a> </li> 
-	 <li class="here"> <div class="xspacing"></div><a href="w/ishlist_new/" class="here">Add new post</a> </li> 
+	 <li> <div class="xspacing"></div><a href="/wishlist_new/">Add new post</a> </li> 
 	 <li> <div class="xspacing"></div><a>Details</a> </li> 
 	</ul>
 		<div class="wspace" ></div>
@@ -211,62 +223,51 @@ div.btnwrapper {
 	 <li> <div class="xspacing"></div><a>Details</a> </li> 
 	</ul>
 		<div class="wspace"></div>
-	<h3> My page</h3>
+	<h3 class="here"> My page</h3>
 	<ul>
-	 <li> <div class="xspacing"></div><a href="/mypage/">My page</a> </li> 
-	 <li> <div class="xspacing"></div> <a>Edit post</a> </li>  
+	 <li > <div class="xspacing"></div><a href="/mypage/" >My page</a> </li> 
+	 <li class="here"> <div class="xspacing"></div> <a class="here">Edit post</a> </li>  
 	</ul>
 	</div>
 
-
-
-
-	<div class="bodyRecV"> 
-<h1> Wishlist &gt; New post </h1>
-
+<div class="bodyRecV">
+<!-- -->
+<h1>Mypage &gt; Edit post</h1>
 {% block content %}
 
 <div class="product">
 
-	<form action="" method="post">
-
-		{% csrf_token %}
-		{% for field in prod_form %}
-			<div class="form-group
-{% if field.errors %}
- has-error{% endif %}">
-
-				<div class="label">{{ field.label_tag }}</div>
-				{{ field }}
-				{% if field.errors %}
-					{% for error in field.errors %}
-					<span class="help-block">
-{{ error }}
-</span>
-
-					{% endfor %}
-				{% endif %}
-
-			</div>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+		{% for field in form %}
+			<div class="label">{{ field.label_tag }}</div>
+			{{ field }}
+			{% if field.errors %}
+				{% for error in field.errors %}    
+					<span class="help-block">{{ error }}</span>
+     	                        {% endfor %}
+                   
+			{% endif %}
 		{% endfor %}
 
-		{% if signup_form.non_field_errors %}
-			{% for error in prod_form.non_field_errors %}
+<p>
+    <div class="btnwrapper">
+    <button type="submit" class="save btn btn-default">Save</button>
+    </div>
+</p>
 
-			<p class="text-danger"><b>{{ error }}</b></p>
+	</div>
 
-			{% endfor %}
-
-		{% endif %}
-
-		<div class="btnwrapper"><button class="btn btn-primary btn-block">Submit</button>
+    </form>
+{% endblock %}
 </div>
-	</form></div>{% endblock %}
-
+<!-- -->
 </div>
 </div>
 </body>
 </html>
+</html>
+
 
 
 

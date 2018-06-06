@@ -1,0 +1,12 @@
+{% block title %}
+
+<h1>[product]</h1>
+<h3> I want to Edit product post! </h3>
+<p> <button onClick="window.location.href='/mainpage/'"> Back to main page </button> </p>
+
+{% endblock %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="save btn btn-default">Save</button>
+</form>

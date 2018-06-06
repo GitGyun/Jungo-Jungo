@@ -1,26 +1,148 @@
-{% block title %}Signup{% endblock %}
+﻿<html>
+<head>
+<title>Sign up</title>
+<style>
+button {
+	background-color:#4CAF50;
+	border: none;
+	color: white;
+	padding: 10px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+}
+div.wrap_button {
+	margin: 8 8;
+	text-align: right;
+	}
+input[type=text] {
+    width: 45%;
+    padding: 8px 16px;
+    margin: 2px 0px;
+    box-sizing: border-box;
+    text-align:left;
+}
+input[type=password] {
+    width: 45%;
+    padding: 8px 16px;
+    margin: 2px 0px;
+    box-sizing: border-box;
+}
+body {
+    background-color: #ebf7d3;
+}
+div.signup {
+	background-color: #eaffbf;
+	width: 400px;
+	line-height: 10px;
+	padding: 0px 0px;
+	border: 3px solid #a5c26a;
+	text-align: left;
+	margin: auto;
+}
+div.login {
+	background-color: #ebf7d3;
+	text-align: center;
+	border: 3px solid #a5c26a;
+	padding: 0px 0px;
+	margin: auto;
+	width:400px;
+
+}
+a:link, a:visited {
+    color: green;
+    padding: 0px 4px;
+    text-align: center; 
+    text-decoration: none;
+    margin-right: 45px;
+    font-size: 16px;
+    display: inline-block;
+}
+a:hover, a:active {
+	padding: 0px 0px;
+	color: black;
+	font-weight: bold;
+	font-size: 16px;
+	text-decoration: underline;
+}
+div.label {
+	width:35%;
+	text-align: center;
+	font-size: 14px;
+	padding: 0px 0px;
+	margin:auto;
+	line-height:3px;
+	display:inline-block;
+}
+div.wspace {
+	height:100px;
+}
+div.titlebar {
+	background-color: #e1fbad;
+	width: 400px;
+	line-height: 10px;
+	border: 3px solid #a5c26a;
+	text-align: center;
+	margin: auto;
+}
+</style>
+</head>
+<body>
+<div class="wspace">&nbsp;</div>
+{% block title %}
+<div class="titlebar"><h3>Create a new account</h3></div>
+{% endblock %}
+
 {% block content %}
+
 <div class="signup">
+
 	<form action="" method="post">
+
 		{% csrf_token %}
+
 		{% for field in signup_form %}
+
 			<div class="form-group{% if field.errors %} has-error{% endif %}">
-				{{ field.label_tag }}
+
+				<div class="label">{{ field.label_tag }}</div>
 				{{ field }}
+
 				{% if field.errors %}
+
 					{% for error in field.errors %}
+
 					<span class="help-block">{{ error }}</span>
+
 					{% endfor %}
+
 				{% endif %}
+
 			</div>
+
 		{% endfor %}
 
+
 		{% if signup_form.non_field_errors %}
+
 			{% for error in login_form.non_field_errors %}
+
 			<p class="text-danger"><b>{{ error }}</b></p>
+
 			{% endfor %}
+
 		{% endif %}
-		<button class="btn btn-primary btn-block">회원가입</button>
-	</form>
+
+<div align="center"><p> <a href="/index/">To Home</a>		<button class="btn btn-primary btn-block">Sign up</button>
+
+</div></p>
+
+</div>	</form>
+
 </div>
+
 {% endblock %}
+
+</body>
+</html>

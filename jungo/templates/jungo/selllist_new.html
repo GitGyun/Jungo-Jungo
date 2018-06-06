@@ -1,9 +1,226 @@
-{% block title %}
-<h1>[product]</h1>
-<h3> I want to sell a new product! </h3>
-<p> <button onClick='windows.location.href='/mainpage/'"> Back to main page </button> </p>
-{% endblock %}
+<html>
+<head>
+<title>Product Information</title>
+<style>
+button {
+	font-weight: bold;
+	background-color: #9bf442;
+	border: none;
+	color: darkgreen;
+	padding: 4px 22px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 14px;
+}
+button:hover {
+	background-color: lightgreen;	
+	color: black;
+}
+div.wrap_button {
+	margin: 8 8;
+	text-align: right;
+	}
+input[type=text] {
+    position: relative;
+    right: 0;
+    width: 45%;
+    padding: 8px 16px;
+    margin: 2px 0px;
+    box-sizing: border-box;
+    text-align:center;
+    display:inline-block;
+}
+input[type=password] {
+    width: 45%;
+    padding: 8px 16px;
+    margin: 0px 2px;
+    box-sizing: border-box;
+}
+html,body {
+    margin: 0 0;
+    height: 100%;
+    background-color: #ebf7d3;
+    overflow: hidden;
+}
+div.product {
+	background-color: #e1fbad;
+	width: 400px;
+	line-height: 10px;
+	padding: 4px 4px;
+	border: 3px solid #a5c26a;
+	text-align: left;
+	margin: auto;
+}
 
+div.xspacing {
+	width: 0px;
+	display: inline-block;
+}
+a.disabled{
+	pointer-events:none;
+	cursor: default;
+}
+a:link, a:visited {
+    color: green;
+    padding: 0px 4px;
+    text-align: center; 
+    text-decoration: none;
+    display: inline-block;
+}
+a:hover, a:active {
+	padding: 0px 0px;
+	color: black;
+	font-weight: bold;
+	
+	text-decoration: underline;
+}
+select {
+	width: 45%;
+}
+div.label {
+	position: relative;
+	left: 10%;
+	width:35%;
+	text-align: left;
+	font-size: 14px;
+	padding: 0px 0px;
+	margin:auto;
+	line-height:3px;
+	display:inline-block;
+}
+div.wspace {
+	height:20px;
+}
+div.header {
+	height:max-content;
+	background-color: #9bf442;
+	padding : 0 0;
+	margin: 0 -4;	
+	text-align: center;
+}
+
+div.head1 {
+	font-weight: bold;
+	width:15%;
+	height: auto;
+	text-align:center;
+	padding: 4 0;
+	display:inline-block;	
+	margin: 0 -4;
+}
+
+div.head2 {
+	position: relative;
+	left: 0;
+	padding: 4 0;
+	width:55%;
+	text-align:center;
+	display:inline-block;
+
+	margin: 0 -4;
+}
+div.head3 {
+	position: relative;
+	left: 0;
+	padding: 4 0;
+	width: 29%;
+	text-align:center;
+	display:inline-block;
+	font-size: 14px;
+	margin: 0 -4;
+}
+div.bodyV {
+	width: 100%;
+	height: 100%;
+}
+
+div.menu_left {
+	width: 15%;
+	height: 100%;
+	text-align: left;
+	font-size: 14px;
+	background-color: #d5fcae;
+	padding: 10 14;
+	color: #558799;
+	display: inline-block;
+}
+
+div.bodyRecV {
+	padding: 10 14;
+	font-size: 14px;
+	height: 100%;
+	display: inline-block;
+	vertical-align: top;
+}
+
+table {
+	font-size: 14px;
+	border: 1px solid red;
+	margin: 18 18;
+}
+td {
+	height: 50px;
+	min-width: 200;
+	vertical-align: center;
+}
+td.leftcol {
+	text-align: center;
+}
+div.commit {
+	position: relative;
+	left: 25px;
+}
+*.here {
+	color: black !important;
+	font-weight: bold;
+}
+div.btnwrapper {
+	position: relative;
+	left:70%;
+	bottom: -8px;
+}
+
+</style>
+</head>
+<body>
+<div class="header">
+	<div class="head1"> <a href="/">Home</a></div>
+	<div class="head2">
+	    <button onClick="window.location.href='/wishlist/';"> Wishlist </button>
+		<div class="xspacing"></div>
+	    <button onClick="window.location.href='/selllist/';"> Selllist </button>
+		<div class="xspacing"></div>
+	    <button onClick="window.location.href='/mypage/';"> Mypage </button>
+	</div>
+	<div class="head3">You are logged in as <b>{{ user.username }}</b>. <button onClick="window.location.href='/logout';"> Log Out </button></div>
+</div>
+
+<div class="bodyV">
+	<div class="menu_left">
+	<h3> Wishlist</h3>
+	<ul>
+	 <li> <div class="xspacing"></div><a href="/wishlist/">Search for demands</a> </li> 
+	 <li> <div class="xspacing"></div><a href="/wishlist_new/">Add new post</a> </li> 
+	 <li> <div class="xspacing"></div><a>Details</a> </li> 
+	</ul>
+		<div class="wspace" ></div>
+	<h3 class="here"> Selllist</h3>
+	<ul>
+	 <li> <div class="xspacing"></div><a href="/selllist/">Search for products</a></li> 
+	 <li class="here"> <div class="xspacing"></div><a class="here" href="/selllist_new/">Add new product</a></li> 
+	 <li> <div class="xspacing"></div><a>Details</a> </li> 
+	</ul>
+		<div class="wspace"></div>
+	<h3> My page</h3>
+	<ul>
+	 <li> <div class="xspacing"></div><a href="/mypage/">My page</a> </li> 
+	 <li> <div class="xspacing"></div> <a>Edit post</a> </li>  
+	</ul>
+	</div>
+
+	<div class="bodyRecV"> 
+<h1> Selllist &gt; New post </h1>
 
 {% block content %}
 
@@ -17,7 +234,7 @@
 {% if field.errors %}
  has-error{% endif %}">
 
-				{{ field.label_tag }}
+				<div class="label">{{ field.label_tag }}</div>
 				{{ field }}
 				{% if field.errors %}
 					{% for error in field.errors %}
@@ -40,6 +257,13 @@
 
 		{% endif %}
 
-		<button class="btn btn-primary btn-block">Add Product</button>
-
+		<div class="btnwrapper"><button class="btn btn-primary btn-block">Submit</button>
+</div>
 	</form></div>{% endblock %}
+
+</div>
+</div>
+</body>
+</html>
+
+

@@ -1,8 +1,84 @@
-<p>Hello, this is Jungo-Jungo.</p>
-<a href="/signup/" title="Sign Up">
-    Sign Up
-</a>
-<a href="/login/" title="Log In">
-    Log In
-</a>
+<html>
+<head>
+<title>JungoJungo INTRO</title>
+<style>
 
+div.titlebar {
+	background-color: #e1fbad;
+	width: 400px;
+	line-height: 25px;
+	border: 3px solid #a5c26a;
+	text-align: center;
+	margin: auto;
+}
+div.UI {
+	background-color: #ebf7d3;
+	text-align: center;
+	padding: 0px 0px;
+	margin: auto;
+	width:400px;
+
+}
+a:link, a:visited {
+    color: green;
+    padding: 0px 0px;
+    text-align: center; 
+    text-decoration: none;
+    font-size: 22px;
+    display: inline-block;
+
+}
+a:hover, a:active {
+	padding: 0px 0px;
+	color: black;
+	font-weight: bold;
+	font-size: 22px;
+	background-color:#c3ff4d;
+}
+.c1, div.c2, div.c3
+{
+	display:inline-block;
+	padding: 0px 0px;
+	width: 130px;
+	border: 3px solid #6e8839;
+	margin: -4px;
+	height:30px;
+
+}
+div.c1:hover, div.c2:hover, div.c3:hover
+{
+	display:inline-block;
+	padding: 0px 0px;
+	width: 130px;
+	background-color:#c3ff4d;
+	margin: -4px;
+	height:30px;
+	font-weight: bold;
+	font-size: 22px;
+
+}
+div.wspace {
+	height:100px;
+}
+
+</style>
+
+</head>
+<body bgcolor="#ebf7d3">
+<div class="wspace"> &nbsp; </div>
+<div class="titlebar" align="center" width="50%" background-color="33ffff">
+<h3>Welcome to JungoJungo!</h3>
+</div>
+<div align="center" class="UI">
+	<div class="c1" onClick="window.location.href='/signup/'"> <a href="/signup/" title="Sign Up">
+Sign Up</a>
+ </div>
+	<div class="c2"> <a href="/mainpage/" title="Sign Up">
+Log In</a>
+ </div>
+	<div class="c3"> <a href="javascript:alert('Not yet!');" title="Sign Up">Help</a>
+ </div>
+</div>
+</div>
+</body>
+</html>

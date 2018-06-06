@@ -1,17 +1,189 @@
 <html>
 <head>
 <title> Main Page </title>
+
+<!-- background-color:; -->
+<style>
+button {
+	font-weight: bold;
+	background-color: #9bf442;
+	border: none;
+	color: #4CAF50;
+	padding: 4px 22px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 14px;
+}
+button:hover {
+	background-color: lightgreen;	
+	color: black;
+
+}
+div.wrap_button {
+	margin: 8 8;
+	text-align: right;
+	}
+input[type=text] {
+    width: 45%;
+    padding: 8px 16px;
+    margin: 2px 0px;
+    box-sizing: border-box;
+    text-align:center;
+}
+input[type=password] {
+    width: 45%;
+    padding: 8px 16px;
+    margin: 0px 2px;
+    box-sizing: border-box;
+}
+html,body {
+    margin: 0 0;
+    height: 100%;
+    background-color: #ebf7d3;
+    overflow: hidden;
+}
+div.product {
+	background-color: #e1fbad;
+	width: 400px;
+	line-height: 10px;
+	padding: 4px 4px;
+	border: 3px solid #a5c26a;
+	text-align: left;
+	margin: auto;
+}
+div.login {
+	background-color: #ebf7d3;
+	text-align: center;
+	border: 3px solid #a5c26a;
+	padding: 0px 0px;
+	margin: auto;
+	width:400px;
+}
+div.xspacing {
+	width: 0px;
+	display: inline-block;
+}
+a:link, a:visited {
+	color:green;
+    padding: 0px 4px;
+    text-align: center; 
+    text-decoration: none;
+    display: inline-block;
+}
+a:hover, a:active {
+	padding: 0px 0px;
+	color: black;
+	font-weight: bold;	
+	text-decoration: underline;
+}
+div.label {
+	width:35%;
+	text-align: center;
+	font-size: 14px;
+	padding: 0px 0px;
+	margin:auto;
+	line-height:3px;
+	display:;
+}
+div.wspace {
+	height:20px;
+}
+div.header {
+	height:max-content;
+	background-color: #9bf442;
+	padding : 0 0;
+	margin: 0 -4;	
+	text-align: center;
+}
+
+div.head1 {
+	font-weight: bold;
+	width:15%;
+	height: auto;
+	text-align:center;
+	padding: 4 0;
+	display:inline-block;	
+	margin: 0 -4;
+}
+
+div.head2 {
+	position: relative;
+	left: 0;
+	padding: 4 0;
+	width:55%;
+	text-align:center;
+	display:inline-block;
+
+	margin: 0 -4;
+}
+div.head3 {
+	position: relative;
+	left: 0;
+	padding: 4 0;
+	width: 29%;
+	text-align:center;
+	display:inline-block;
+	font-size: 14px;
+	margin: 0 -4;
+}
+div.bodyV {
+	width: 100%;
+	height: 100%;
+}
+
+div.menu_left {
+	width: 15%;
+	height: 100%;
+	text-align: left;
+	font-size: 14px;
+	background-color: #d5fcae;
+	padding: 10 14;
+	color: #558799;
+}
+
+</style>
 </head>
 
 <body>
-    <p> You are logged in as <b>{{ username }}</b>. </p>
+<div class="header">
+	<div class="head1"> <a href="javascript:location.reload();">Home</a></div>
+	<div class="head2">
+	    <button onClick="window.location.href='/wishlist/';"> Wishlist </button>
+		<div class="xspacing"></div>
+	    <button onClick="window.location.href='/selllist/';"> Selllist </button>
+		<div class="xspacing"></div>
+	    <button onClick="window.location.href='/mypage/';"> Mypage </button>
+	</div>
+	<div class="head3">You are logged in as <b>{{ username }}</b>. <button onClick="window.location.href='/logout/';"> Log Out </button></div>
+</div>
+<div class="bodyV">
+	<div class="menu_left">
+	<h3> Wishlist</h3>
+	<ul>
+	 <li> <div class="xspacing"></div><a href="wishlist/">Search for demands</a> </li> 
+	 <li> <div class="xspacing"></div><a href="wishlist_new/">Add/Edit new post</a> </li> 
+	 <li> <div class="xspacing"></div><a>Details</a> </li> 
+	</ul>
+		<div class="wspace" ></div>
+	<h3> Selllist</h3>
+	<ul>
+	 <li> <div class="xspacing"></div><a href="selllist/">Search for products</a></li> 
+	 <li> <div class="xspacing"></div><a href-"selllist_new/">Add/Edit new product</a></li> 
+	 <li> <div class="xspacing"></div><a>Details</a> </li> 
+	</ul>
+		<div class="wspace"></div>
+	<h3> My page</h3>
+	<ul>
+	 <li> <div class="xspacing"></div><a href="/mypage/">My page</a> </li> 
+	 <li> <div class="xspacing"></div> <a>Edit post</a> </li>  
 
-    <p> <button onClick="window.location.href='../';"> Log Out </button> </p>
-    <p> <button onClick="window.location.href='/wishlist/';"> Go To Wishlist </button> </p>
-    <p> <button onClick="window.location.href='/selllist/';"> Go To Selllist </button> </p>
-    <p> <button onClick="window.location.href='/mypage/';"> Mypage </button> </p>
-    
-    <p>This is the main page.</p>
+	</ul>
+	</div>
+
+
+	<div class="body"> </div>
+</div>
 </body>
 
 </html>

@@ -18,7 +18,7 @@
             </div>
         {% endif %}
         {% if user.is_authenticated and user == post.author %}
-            <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}">Edit</a>   
+            <a class="btn btn-default" href="{% url 'sell_edit' pk=post.pk %}">Edit</a>   
             <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}">Remove</a>
          {% else %}
             <p>게시자만 수정이 가능합니다.</p>
@@ -29,7 +29,7 @@
             <tbody>
                 <tr>
                     <td style="padding:5px;">Product type</td>
-                    <td style="padding:5px;border-left:1px solid black;">{{post.ptype}}</td>   
+                    <td style="padding:5px;border-left:1px solid black;">{{post.prodType}}</td>   
                 </tr>
                <tr>
                     <td style="padding:5px;">Product name</td>
@@ -39,12 +39,16 @@
                     <td style="padding:5px;">Price</td>
                     <td style="padding:5px;border-left:1px solid black;">{{post.price}}</td>   
                 </tr>
+               <tr>
+                    <td style="padding:5px;">Seller</a></td>
+                    <td style="padding:5px;border-left:1px solid black;"><a href="/userinfo/{{ seller }}">{{ seller }}</td>   
+                </tr>
             </tbody>
         </table>
         {% if post.file %}
             <a id="id_uploaded_file" href="{{ post.file.url }}" download>{{ post.file.name }}</a>
         {% endif %}
-        <p>{{ post.text|linebreaksbr }}</p>
+        <p>{{ post.pdesc|linebreaksbr }}</p>
     </div>
     
     <a href="/buy/{{ post.pid }}">Buy this product</a>

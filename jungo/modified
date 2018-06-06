@@ -1,0 +1,24 @@
+index.html
+replaced \login to \mainpage
+
+mypage.html
+deleted userinfo.balance
+modified <h3>buy/sell</h3> to <h3>to buy/to sell</h3>
+modified wish/sell.product.pname/price to wish/sell.pname/price
+modified {% for ...} to buyer/seller.username
+added hyperlink from buyer/seller to userinfo
+
+mainpage.html
+replaced /.. to /logout
+
+models.py
+deleted student.balance
+created Userinfo, Wishinfo, Sellinfo, Buyerinfo, Sellerinfo
+
+views.py
+created logout
+created userinfo
+modified infos in mypage
+
+urls.py
+added userinfo path

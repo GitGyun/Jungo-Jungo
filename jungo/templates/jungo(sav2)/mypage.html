@@ -1,0 +1,61 @@
+{% block content %}
+
+<button onClick="window.location.href='/mainpage'"> Back to Main Page </button>
+
+{% if userinfo %}
+    <p>Welcome, {{ userinfo.username }}</p>
+    <a href="/userinfo/{{ userinfo.username }}">Your User Information</a>
+{% endif %}
+
+<h3>Your wishlist</h3>
+{% if wishinfo %}
+    {% for wish in wishinfo %}
+        <p>
+            Product Name: {{ wish.pname }}<br>
+            Product Price: {{ wish.price }}
+        </p>
+    {% endfor %}
+{% else %}
+<p>You haven't write a wishlist.</p>
+{% endif %}
+
+<h3>Your selllist</h3>
+{% if sellinfo %}
+    {% for sell in sellinfo %}
+        <p>
+            Product Name: {{ sell.pname }}<br>
+            Product Price: {{ sell.price }}
+        </p>
+    {% endfor %}
+{% else %}
+<p>You haven't write a selllist.</p>
+{% endif %}
+
+<h2>Proceeding Trade</h2>
+<h3>To Sell</h3>
+{% if buyerinfo %}
+    {% for buy in buyerinfo %}
+        <p>
+            Product Name: {{ buy.pname }}<br>
+            Product Price: {{ buy.price }}<br>
+            Seller Username: <a href="/userinfo/{{ buy.buyername }}">{{ buy.buyername }}</a>
+        </p>
+    {% endfor %}
+{% else %}
+<p>No requests.</p>
+{% endif %}
+
+<h3>To Buy</h3>
+{% if sellerinfo %}
+    {% for sell in sellerinfo %}
+        <p>
+            Product Name: {{ sell.pname }}<br>
+            Product Price: {{ sell.price }}<br>
+            Buyer Username: <a href="/userinfo/{{ sell.sellername }}">{{ sell.sellername }}</a>
+        </p>
+    {% endfor %}
+{% else %}
+<p>No requests.</p>
+{% endif %}
+
+{% endblock %}
